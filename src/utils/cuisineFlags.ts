@@ -1,3 +1,5 @@
+import { Area } from '@/api/mealdb';
+
 const cuisineToCountry: Record<string, string> = {
   Algerian: 'dz',
   American: 'us',
@@ -38,7 +40,7 @@ const cuisineToCountry: Record<string, string> = {
   Vietnamese: 'vn',
 };
 
-export function getFlagUrl(cuisine: string): string | null {
+export function getFlagUrl(cuisine: Area): string | null {
   const code = cuisineToCountry[cuisine];
   return code ? `https://flagcdn.com/w40/${code}.png` : null;
 }
