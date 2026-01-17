@@ -1,4 +1,47 @@
-import { IngredientName, MealId } from '@/api/mealdb';
+import { Branded } from '@/types/Common';
+
+export type Cousine = Branded<string, 'cousine'>;
+export type Category = Branded<string, 'category'>;
+export type IngredientName = Branded<string, 'ingredientName'>;
+export type MealId = Branded<string, 'mealId'>;
+
+export type CousineObject = {
+  strArea: Cousine;
+};
+
+export type CousinesResponse = {
+  meals: CousineObject[];
+};
+
+export type CategoryObject = {
+  strCategory: Category;
+};
+
+export type CategoriesResponse = {
+  meals: CategoryObject[];
+};
+
+export type Ingredient = {
+  idIngredient: string;
+  strDescription: string | null;
+  strIngredient: IngredientName;
+  strThumb: string;
+  strType: string | null;
+};
+
+export type IngredientsResponse = {
+  meals: Ingredient[];
+};
+
+export type Meal = {
+  strMeal: string;
+  strMealThumb: string;
+  idMeal: MealId;
+};
+
+export type MealFilterResponse = {
+  meals: Meal[];
+};
 
 export type DetailedMeal = {
   idMeal: MealId;

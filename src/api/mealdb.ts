@@ -1,50 +1,20 @@
-import { Branded } from '@/types/Common';
-import { DetailedMeal, DetailedMealResponse } from '@/types/MealsApi';
+import {
+  Cousine,
+  CousineObject,
+  CousinesResponse,
+  CategoryObject,
+  CategoriesResponse,
+  Ingredient,
+  IngredientsResponse,
+  IngredientName,
+  Meal,
+  MealFilterResponse,
+  MealId,
+  DetailedMeal,
+  DetailedMealResponse,
+} from '@/types/MealsApi';
 
 const BASE_URL = 'https://www.themealdb.com/api/json/v1/1';
-
-export type Cousine = Branded<string, 'cousine'>;
-export type Category = Branded<string, 'category'>;
-export type IngredientName = Branded<string, 'ingredientName'>;
-export type MealId = Branded<string, 'mealId'>;
-
-export type CousineObject = {
-  strArea: Cousine;
-};
-
-type CousinesResponse = {
-  meals: CousineObject[];
-};
-
-export type CategoryObject = {
-  strCategory: Category;
-};
-
-type CategoriesResponse = {
-  meals: CategoryObject[];
-};
-
-export type Ingredient = {
-  idIngredient: string;
-  strDescription: string | null;
-  strIngredient: IngredientName;
-  strThumb: string;
-  strType: string | null;
-};
-
-type IngredientsResponse = {
-  meals: Ingredient[];
-};
-
-export type Meal = {
-  strMeal: string;
-  strMealThumb: string;
-  idMeal: MealId;
-};
-
-type MealFilterResponse = {
-  meals: Meal[];
-};
 
 export async function fetchAreas(): Promise<CousineObject[]> {
   const response = await fetch(`${BASE_URL}/list.php?a=list`);

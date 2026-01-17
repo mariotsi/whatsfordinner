@@ -1,9 +1,5 @@
-import {
-  Cousine,
-  fetchIngredients,
-  fetchRecommendations,
-  IngredientName,
-} from '@/api/mealdb';
+import { Cousine, IngredientName } from '@/types/MealsApi';
+import { fetchRecommendations } from '@/api/mealdb';
 import { useQuery } from '@tanstack/react-query';
 
 export function useRecommendations(

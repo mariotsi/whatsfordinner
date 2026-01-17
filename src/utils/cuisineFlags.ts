@@ -1,4 +1,4 @@
-import { Cousine } from '@/api/mealdb';
+import { Cousine } from '@/types/MealsApi';
 
 const cuisineToCountry: Record<string, string> = {
   Algerian: 'dz',

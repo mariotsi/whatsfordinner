@@ -1,6 +1,6 @@
 'use client';
 
-import { Cousine, IngredientName } from '@/api/mealdb';
+import { Cousine, IngredientName } from '@/types/MealsApi';
 import { useRecommendations } from '@/hooks/useRecommendations';
 import { Box } from '@mui/material';
 
