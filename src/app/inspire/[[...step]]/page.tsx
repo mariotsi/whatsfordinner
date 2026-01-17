@@ -3,14 +3,23 @@ import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
-import { Button } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import { usePathname, useRouter } from 'next/navigation';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, ComponentType } from 'react';
+import CuisinesStep from '../components/CuisinesStep';
+import IngredientsStep from '../components/IngredientsStep';
+import CookStep from '../components/CookStep';
 
-const steps = [
-  { label: 'Cuisines', key: 'cuisines' },
-  { label: 'Ingredients', key: 'ingredients' },
-  { label: 'Cook!', key: 'cook' },
+interface StepConfig {
+  label: string;
+  key: string;
+  component: ComponentType;
+}
+
+const steps: StepConfig[] = [
+  { label: 'Cuisines', key: 'cuisines', component: CuisinesStep },
+  { label: 'Ingredients', key: 'ingredients', component: IngredientsStep },
+  { label: 'Cook!', key: 'cook', component: CookStep },
 ];
 
 export default function InspirePage() {
@@ -51,8 +60,17 @@ export default function InspirePage() {
     [navigateToStep]
   );
 
+  const StepComponent = useMemo(
+    () => steps[activeStep].component,
+    [activeStep]
+  );
+
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box sx={{ width: '100%', p: 3 }}>
+      <Typography variant="h4" gutterBottom align="center" sx={{ mb: 4 }}>
+        Get inspired
+      </Typography>
+
       <Stepper activeStep={activeStep} alternativeLabel>
         {steps.map((step, index) => (
           <Step key={step.key} onClick={handleStep(index)}>
@@ -60,7 +78,12 @@ export default function InspirePage() {
           </Step>
         ))}
       </Stepper>
-      <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+
+      <Box sx={{ py: 4 }}>
+        <StepComponent />
+      </Box>
+
+      <Box sx={{ display: 'flex', flexDirection: 'row', pt: 10 }}>
         <Button
           color="inherit"
           disabled={activeStep === 0}

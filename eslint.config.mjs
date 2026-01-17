@@ -3,6 +3,7 @@ import nextVitals from 'eslint-config-next/core-web-vitals';
 import nextTs from 'eslint-config-next/typescript';
 import prettier from 'eslint-plugin-prettier';
 import prettierConfig from 'eslint-config-prettier';
+import reactHooks from 'eslint-plugin-react-hooks';
 
 const eslintConfig = defineConfig([
   ...nextVitals,
@@ -11,6 +12,7 @@ const eslintConfig = defineConfig([
   {
     plugins: {
       prettier,
+      'react-hooks': reactHooks,
     },
     rules: {
       'prettier/prettier': 'error',

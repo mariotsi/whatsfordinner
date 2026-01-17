@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Top bun -->
+  <path d="M10 45 Q10 20 50 20 Q90 20 90 45 Z" fill="#F4A460"/>
+  <ellipse cx="30" cy="32" rx="3" ry="2" fill="#FFF5E1"/>
+  <ellipse cx="55" cy="28" rx="2" ry="1.5" fill="#FFF5E1"/>
+  <ellipse cx="70" cy="35" rx="2.5" ry="1.5" fill="#FFF5E1"/>
+  
+  <!-- Lettuce -->
+  <path d="M8 48 Q20 42 30 50 Q40 42 50 50 Q60 42 70 50 Q80 42 92 48 L92 52 L8 52 Z" fill="#228B22"/>
+  
+  <!-- Cheese -->
+  <polygon points="5,52 95,52 92,60 8,60" fill="#FFD700"/>
+  
+  <!-- Patty -->
+  <rect x="8" y="60" width="84" height="12" rx="2" fill="#8B4513"/>
+  
+  <!-- Bottom bun -->
+  <path d="M10 72 L90 72 Q92 85 50 85 Q8 85 10 72 Z" fill="#F4A460"/>
+</svg>
