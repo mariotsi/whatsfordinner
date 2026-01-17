@@ -1,4 +1,5 @@
-import { Branded } from '@/utils/common';
+import { Branded } from '@/types/Common';
+import { DetailedMeal, DetailedMealResponse } from '@/types/MealsApi';
 
 const BASE_URL = 'https://www.themealdb.com/api/json/v1/1';
 
@@ -117,4 +118,15 @@ export async function fetchRecommendations(
   return mealsByCousine.filter(({ idMeal }) =>
     mealsIdReccomendedByIngredient.has(idMeal)
   );
+}
+
+export async function fetchMealDetails(idMeal: MealId): Promise<DetailedMeal> {
+  const response = await fetch(`${BASE_URL}/lookup.php?i=${idMeal}`);
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch the detailed meal');
+  }
+
+  const data: DetailedMealResponse = await response.json();
+  return data.meals[0];
 }
