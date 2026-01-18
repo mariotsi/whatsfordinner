@@ -94,9 +94,14 @@ export async function fetchMealDetails(idMeal: MealId): Promise<DetailedMeal> {
   const response = await fetch(`${BASE_URL}/lookup.php?i=${idMeal}`);
 
   if (!response.ok) {
-    throw new Error('Failed to fetch the detailed meal');
+    throw new Error('Failed to fetch the detailed meal, network error');
   }
 
   const data: DetailedMealResponse = await response.json();
-  return data.meals[0];
+
+  const mealDetail = Array.isArray(data?.meals) ? data.meals?.[0] : null;
+  if (!mealDetail) {
+    throw new Error('Failed to fetch the detailed meal, empty response');
+  }
+  return mealDetail;
 }

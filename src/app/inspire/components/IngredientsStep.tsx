@@ -12,7 +12,7 @@ export default function IngredientsStep() {
       getOptionLabel={(option) => option.strIngredient}
       loading={isLoading}
       size="small"
-      sx={{ maxWidth: 300, mx: 'auto' }}
+      sx={{ maxWidth: 350, mx: 'auto' }}
       renderOption={(props, option) => {
         const { key, ...rest } = props;
         return (

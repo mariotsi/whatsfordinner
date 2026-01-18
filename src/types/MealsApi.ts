@@ -100,5 +100,5 @@ export type DetailedMeal = {
 };
 
 export type DetailedMealResponse = {
-  meals: DetailedMeal[];
+  meals: DetailedMeal[] | null;
 };
