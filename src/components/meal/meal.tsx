@@ -9,11 +9,23 @@ import {
   CardHeader,
   CardMedia,
   Typography,
+  Button,
+  Link,
+  Stack,
+  Divider,
 } from '@mui/material';
 import IngredientsList from './ingredientsList';
+import LaunchIcon from '@mui/icons-material/Launch';
+import YouTubeIcon from '@mui/icons-material/YouTube';
+import { getYoutubeId } from '@/utils/common';
+import { useMemo } from 'react';
 
 export default function Meal({ idMeal }: { idMeal: MealId }) {
   const { data: meal, isLoading, isError, error } = useMeal(idMeal);
+  const youtubeId = useMemo(
+    () => getYoutubeId(meal?.strYoutube),
+    [meal?.strYoutube]
+  );
 
   if (isError) {
     return <>{error.message}</>;
@@ -33,37 +45,100 @@ export default function Meal({ idMeal }: { idMeal: MealId }) {
         display: 'flex',
         width: '100%',
         height: 'fit-content',
+        flexDirection: { xs: 'column', md: 'row' },
       }}
     >
       <CardMedia
         component="img"
-        sx={{ width: '50%', height: 'auto', objectFit: 'cover' }}
-        image={meal?.strMealThumb}
-        alt={meal?.strMeal + ' dish'}
+        sx={{
+          width: { xs: '100%', md: '50%' },
+          height: 'auto',
+          objectFit: 'cover',
+          minHeight: 300,
+        }}
+        image={meal.strMealThumb}
+        alt={meal.strMeal + ' dish'}
       />
 
       <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
         <CardHeader
-          title={meal?.strMeal}
-          subheader={meal?.strCategory + ' ' + meal?.strArea}
+          title={meal.strMeal}
+          subheader={meal.strCategory + ' • ' + meal.strArea}
         />
-
-        <CardContent sx={{ flexGrow: 1, pt: 0, pb: 2 }}>
-          <Typography
-            variant="body2"
-            sx={{ color: 'text.secondary' }}
-          ></Typography>
-        </CardContent>
-
         <Box>
           <CardContent sx={{ pt: 0 }}>
             <IngredientsList meal={meal} />
-            <Typography sx={{ marginBottom: 2, marginTop: 4 }} variant="body1">
+            <Typography
+              sx={{ marginBottom: 1, marginTop: 4, fontWeight: 'bold' }}
+              variant="body1"
+            >
               Instructions
             </Typography>
-            <Typography sx={{ marginBottom: 2 }} variant="body2">
-              {meal?.strInstructions}
+            <Typography
+              sx={{ marginBottom: 3, whiteSpace: 'pre-line' }}
+              variant="body2"
+              color="text.secondary"
+            >
+              {meal.strInstructions}
             </Typography>
+            <Divider sx={{ my: 3 }} />
+            <Stack spacing={3}>
+              {youtubeId && (
+                <Box>
+                  <Typography
+                    variant="subtitle2"
+                    sx={{
+                      mb: 1,
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 1,
+                    }}
+                  >
+                    <YouTubeIcon color="error" fontSize="small" /> Video
+                    Tutorial
+                  </Typography>
+                  <Box
+                    sx={{
+                      position: 'relative',
+                      width: '100%',
+                      paddingTop: '56.25%', // Trick to keep the 16:9 aspect ratio
+                      borderRadius: 1,
+                      overflow: 'hidden',
+                      bgcolor: 'black',
+                    }}
+                  >
+                    <iframe
+                      style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        border: 0,
+                      }}
+                      src={`https://www.youtube.com/embed/${youtubeId}`}
+                      title="YouTube video player"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  </Box>
+                </Box>
+              )}
+              {meal?.strSource && (
+                <Button
+                  component={Link}
+                  href={meal.strSource}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  variant="outlined"
+                  size="small"
+                  startIcon={<LaunchIcon />}
+                  sx={{ alignSelf: 'flex-start', textTransform: 'none' }}
+                >
+                  View original source
+                </Button>
+              )}
+            </Stack>
           </CardContent>
         </Box>
       </Box>

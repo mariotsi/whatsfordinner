@@ -21,7 +21,10 @@ export default function IngredientsList({ meal }: { meal: DetailedMeal }) {
 
   return (
     <Box component="section">
-      <Typography sx={{ marginBottom: 2 }} variant="body1" gutterBottom>
+      <Typography
+        sx={{ marginBottom: 1, marginTop: 4, fontWeight: 'bold' }}
+        variant="body1"
+      >
         Ingredients
       </Typography>
 

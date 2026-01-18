@@ -48,7 +48,7 @@ export type DetailedMeal = {
   strMeal: string;
   strMealAlternate: string | null;
   strCategory: string;
-  strArea: string;
+  strArea: Cousine;
   strInstructions: string;
   strMealThumb: string;
   strTags: string | null;
