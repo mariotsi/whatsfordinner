@@ -76,7 +76,7 @@ export async function getMealsByIngredient(
 export async function fetchRecommendations(
   cousine: Cousine,
   ingredientName: IngredientName
-): Promise<Meal[]> {
+): Promise<Set<MealId>> {
   const [mealsByCousine, mealsByIngredient] = await Promise.all([
     getMealsByCousine(cousine),
     getMealsByIngredient(ingredientName),
@@ -85,8 +85,11 @@ export async function fetchRecommendations(
   const mealsIdReccomendedByIngredient = new Set(
     mealsByIngredient.map(({ idMeal }) => idMeal)
   );
-  return mealsByCousine.filter(({ idMeal }) =>
-    mealsIdReccomendedByIngredient.has(idMeal)
+  const mealsIdReccomendedByCousine = new Set(
+    mealsByCousine.map(({ idMeal }) => idMeal)
+  );
+  return mealsIdReccomendedByIngredient.intersection(
+    mealsIdReccomendedByCousine
   );
 }
 

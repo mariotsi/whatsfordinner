@@ -1,22 +1,28 @@
 'use client';
 
+import Meal from '@/components/meal/meal';
+import { useRandomRecommendation } from '@/hooks/useRandomRecommendation';
 import { Cousine, IngredientName } from '@/types/MealsApi';
-import { useRecommendations } from '@/hooks/useRecommendations';
 import {
-  Box,
-  Skeleton,
   Alert,
+  Box,
+  Button,
   CircularProgress,
+  Skeleton,
   Typography,
 } from '@mui/material';
-import Meal from '@/components/meal/meal';
 
 export default function CookStep() {
   const {
-    data: recommendedMeals = [],
+    reccomendedMealId,
+    moveToNextRecommendation,
     isLoading,
     isError,
-  } = useRecommendations('Italian' as Cousine, 'Parsley' as IngredientName);
+    hasReccomendationLeft,
+  } = useRandomRecommendation(
+    'Italian' as Cousine,
+    'Parsley' as IngredientName
+  );
 
   if (isLoading) {
     return (
@@ -36,7 +42,7 @@ export default function CookStep() {
     );
   }
 
-  if (isError || recommendedMeals.length === 0) {
+  if (isError) {
     return (
       <Box sx={{ p: 3 }}>
         <Alert severity="error" sx={{ mb: 2 }}>
@@ -46,10 +52,17 @@ export default function CookStep() {
       </Box>
     );
   }
+  if (!hasReccomendationLeft) {
+    return (
+      <p>No more options for this combination of cousine and ingrediends :( </p>
+    );
+  }
 
   return (
     <Box>
-      <Meal idMeal={recommendedMeals[0].idMeal} />
+      <Meal idMeal={reccomendedMealId} />
+      <Button>I love it</Button>
+      <Button onClick={moveToNextRecommendation}>I Don&apos;t like it</Button>
     </Box>
   );
 }

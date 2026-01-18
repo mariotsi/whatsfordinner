@@ -37,7 +37,7 @@ export default function Meal({ idMeal }: { idMeal: MealId }) {
     >
       <CardMedia
         component="img"
-        sx={{ width: 200, height: 'auto', objectFit: 'cover' }}
+        sx={{ width: '50%', height: 'auto', objectFit: 'cover' }}
         image={meal?.strMealThumb}
         alt={meal?.strMeal + ' dish'}
       />

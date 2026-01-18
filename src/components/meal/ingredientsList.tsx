@@ -25,7 +25,7 @@ export default function IngredientsList({ meal }: { meal: DetailedMeal }) {
         Ingredients
       </Typography>
 
-      <List dense sx={{ width: '50%', bgcolor: 'background.paper' }}>
+      <List dense sx={{ width: '100%', bgcolor: 'background.paper' }}>
         {ingredients.map((item, index) => (
           <Box key={item.ingredient}>
             <ListItem
