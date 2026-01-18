@@ -3,28 +3,30 @@ import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
-import { Button, Typography } from '@mui/material';
+import { Button, Tooltip, Typography } from '@mui/material';
 import { usePathname, useRouter } from 'next/navigation';
-import { useCallback, useMemo, ComponentType } from 'react';
+import { useCallback, useMemo, useEffect, ComponentType } from 'react';
 import CuisinesStep from '../components/CuisinesStep';
 import IngredientsStep from '../components/IngredientsStep';
 import CookStep from '../components/CookStep';
+import { useInspire } from '../InspireContext';
 
-interface StepConfig {
+type StepConfig = {
   label: string;
   key: string;
   component: ComponentType;
-}
+};
 
 const steps: StepConfig[] = [
   { label: 'Cuisines', key: 'cuisines', component: CuisinesStep },
   { label: 'Ingredients', key: 'ingredients', component: IngredientsStep },
-  { label: 'Cook!', key: 'cook', component: CookStep },
+  { label: "Let's cook!", key: 'cook', component: CookStep },
 ];
 
 export default function InspirePage() {
   const router = useRouter();
   const pathname = usePathname();
+  const { cuisine, ingredient } = useInspire();
 
   const activeStep = useMemo(() => {
     const currentKey = pathname.split('/').pop();
@@ -34,35 +36,80 @@ export default function InspirePage() {
     );
   }, [pathname]);
 
-  const navigateToStep = useCallback(
+  const canProceedToStep = useCallback(
     (stepIndex: number) => {
-      router.push(`/inspire/${steps[stepIndex].key}`);
+      if (stepIndex <= 0) {
+        return true;
+      }
+      if (stepIndex === 1) {
+        return !!cuisine;
+      }
+      if (stepIndex === 2) {
+        return !!cuisine && !!ingredient;
+      }
+      return false;
     },
-    [router]
+    [cuisine, ingredient]
   );
 
-  const handleNext = useCallback(() => {
-    if (activeStep < steps.length - 1) {
-      navigateToStep(activeStep + 1);
+  useEffect(() => {
+    if (!canProceedToStep(activeStep)) {
+      const lastValidStep =
+        steps
+          .map((_, i) => i)
+          .filter(canProceedToStep)
+          .pop() ?? 0;
+      router.replace(`/inspire/${steps[lastValidStep].key}`);
     }
-  }, [activeStep, navigateToStep]);
+  }, [activeStep, canProceedToStep, router]);
 
-  const handleBack = useCallback(() => {
-    if (activeStep > 0) {
-      navigateToStep(activeStep - 1);
+  const getNextDisabledReason = useMemo(() => {
+    if (activeStep === 0 && !cuisine) {
+      return 'Select a cuisine first';
     }
-  }, [activeStep, navigateToStep]);
+    if (activeStep === 1 && !ingredient) {
+      return 'Select an ingredient first';
+    }
+    return '';
+  }, [activeStep, cuisine, ingredient]);
+
+  const navigateToStep = useCallback(
+    (stepIndex: number) => {
+      if (canProceedToStep(stepIndex)) {
+        router.push(`/inspire/${steps[stepIndex].key}`);
+      }
+    },
+    [router, canProceedToStep]
+  );
+
+  const handleNext = useCallback(
+    () => navigateToStep(Math.min(steps.length - 1, activeStep + 1)),
+    [activeStep, navigateToStep]
+  );
+
+  const handleBack = useCallback(
+    () => navigateToStep(Math.max(0, activeStep - 1)),
+    [activeStep, navigateToStep]
+  );
 
   const handleStep = useCallback(
-    (step: number) => () => {
-      navigateToStep(step);
-    },
+    (step: number) => () => navigateToStep(step),
     [navigateToStep]
   );
 
   const StepComponent = useMemo(
     () => steps[activeStep].component,
     [activeStep]
+  );
+
+  const isNextDisabled = useMemo(
+    () => activeStep === steps.length - 1 || !canProceedToStep(activeStep + 1),
+    [activeStep, canProceedToStep]
+  );
+
+  const isValidStep = useMemo(
+    () => canProceedToStep(activeStep),
+    [activeStep, canProceedToStep]
   );
 
   return (
@@ -79,9 +126,7 @@ export default function InspirePage() {
         ))}
       </Stepper>
 
-      <Box sx={{ py: 4 }}>
-        <StepComponent />
-      </Box>
+      <Box sx={{ py: 4 }}>{isValidStep && <StepComponent />}</Box>
 
       <Box sx={{ display: 'flex', flexDirection: 'row', pt: 10 }}>
         <Button
@@ -93,13 +138,17 @@ export default function InspirePage() {
           Back
         </Button>
         <Box sx={{ flex: '1 1 auto' }} />
-        <Button
-          onClick={handleNext}
-          disabled={activeStep === steps.length - 1}
-          sx={{ mr: 1 }}
-        >
-          Next
-        </Button>
+        <Tooltip title={getNextDisabledReason} arrow>
+          <span>
+            <Button
+              onClick={handleNext}
+              disabled={isNextDisabled}
+              sx={{ mr: 1 }}
+            >
+              Next
+            </Button>
+          </span>
+        </Tooltip>
       </Box>
     </Box>
   );

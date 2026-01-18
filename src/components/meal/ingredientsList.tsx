@@ -34,7 +34,7 @@ export default function IngredientsList({ meal }: { meal: DetailedMeal }) {
             <ListItem
               secondaryAction={
                 <Typography variant="body2" color="text.secondary" noWrap>
-                  {item.measure || 'Add to taste'}
+                  {item.measure || 'To taste'}
                 </Typography>
               }
               disablePadding

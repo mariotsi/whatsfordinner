@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { InspireProvider } from './InspireContext';
 
 export const metadata: Metadata = {
   title: "Get inspired | What's for dinner",
@@ -9,5 +10,5 @@ export default function InspireLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return children;
+  return <InspireProvider>{children}</InspireProvider>;
 }

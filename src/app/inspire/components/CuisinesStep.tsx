@@ -4,12 +4,16 @@ import { useCuisines } from '@/hooks/useCuisines';
 import { Autocomplete, Box, CircularProgress, TextField } from '@mui/material';
 import Image from 'next/image';
 import { getFlagUrl } from '@/utils/cuisineFlags';
+import { useInspire } from '../InspireContext';
 
 export default function CuisinesStep() {
   const { data: cuisines = [], isLoading, isError } = useCuisines();
+  const { cuisine, setCuisine } = useInspire();
 
   return (
     <Autocomplete
+      value={cuisine}
+      onChange={(_, value) => setCuisine(value)}
       options={cuisines}
       loading={isLoading}
       size="small"

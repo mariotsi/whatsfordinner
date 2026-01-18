@@ -2,7 +2,6 @@
 
 import Meal from '@/components/meal/meal';
 import { useRandomRecommendation } from '@/hooks/useRandomRecommendation';
-import { Cousine, IngredientName } from '@/types/MealsApi';
 import {
   Alert,
   Box,
@@ -11,18 +10,18 @@ import {
   Skeleton,
   Typography,
 } from '@mui/material';
+import { useInspireRequired } from '../InspireContext';
 
 export default function CookStep() {
+  const { cuisine, ingredient } = useInspireRequired();
+
   const {
     reccomendedMealId,
     moveToNextRecommendation,
     isLoading,
     isError,
     hasReccomendationLeft,
-  } = useRandomRecommendation(
-    'Italian' as Cousine,
-    'Parsley' as IngredientName
-  );
+  } = useRandomRecommendation(cuisine, ingredient);
 
   if (isLoading) {
     return (
@@ -52,6 +51,7 @@ export default function CookStep() {
       </Box>
     );
   }
+
   if (!hasReccomendationLeft) {
     return (
       <p>No more options for this combination of cousine and ingrediends :( </p>
