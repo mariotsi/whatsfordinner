@@ -26,7 +26,7 @@ const steps: StepConfig[] = [
 export default function InspirePage() {
   const router = useRouter();
   const pathname = usePathname();
-  const { cuisine, ingredient } = useInspire();
+  const { cuisine, ingredient, reset } = useInspire();
 
   const activeStep = useMemo(() => {
     const currentKey = pathname.split('/').pop();
@@ -97,14 +97,25 @@ export default function InspirePage() {
     [navigateToStep]
   );
 
+  const handleInspireAgain = useCallback(() => {
+    reset();
+    router.push(`/inspire/${steps[0].key}`);
+  }, [reset, router]);
+
+  const handleGoHome = useCallback(() => {
+    router.push('/');
+  }, [router]);
+
   const StepComponent = useMemo(
     () => steps[activeStep].component,
     [activeStep]
   );
 
+  const isLastStep = activeStep === steps.length - 1;
+
   const isNextDisabled = useMemo(
-    () => activeStep === steps.length - 1 || !canProceedToStep(activeStep + 1),
-    [activeStep, canProceedToStep]
+    () => isLastStep || !canProceedToStep(activeStep + 1),
+    [isLastStep, activeStep, canProceedToStep]
   );
 
   const isValidStep = useMemo(
@@ -128,7 +139,7 @@ export default function InspirePage() {
 
       <Box sx={{ py: 4 }}>{isValidStep && <StepComponent />}</Box>
 
-      <Box sx={{ display: 'flex', flexDirection: 'row', pt: 10 }}>
+      <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
         <Button
           color="inherit"
           disabled={activeStep === 0}
@@ -138,17 +149,24 @@ export default function InspirePage() {
           Back
         </Button>
         <Box sx={{ flex: '1 1 auto' }} />
-        <Tooltip title={getNextDisabledReason} arrow>
-          <span>
-            <Button
-              onClick={handleNext}
-              disabled={isNextDisabled}
-              sx={{ mr: 1 }}
-            >
-              Next
+        {isLastStep ? (
+          <>
+            <Button color="inherit" onClick={handleInspireAgain} sx={{ mr: 1 }}>
+              Inspire me again
             </Button>
-          </span>
-        </Tooltip>
+            <Button variant="contained" onClick={handleGoHome}>
+              Go to home
+            </Button>
+          </>
+        ) : (
+          <Tooltip title={getNextDisabledReason} arrow>
+            <span>
+              <Button onClick={handleNext} disabled={isNextDisabled}>
+                Next
+              </Button>
+            </span>
+          </Tooltip>
+        )}
       </Box>
     </Box>
   );
