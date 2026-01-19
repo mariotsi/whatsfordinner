@@ -23,7 +23,7 @@ export default function CookStep() {
     return <RecommendationsLoading />;
   }
 
-  if (isError || true) {
+  if (isError) {
     return <RecommendationsError />;
   }
 
