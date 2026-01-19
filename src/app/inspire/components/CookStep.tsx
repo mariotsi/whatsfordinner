@@ -5,19 +5,29 @@ import NoMoreRecommendations from '@/components/meal/NoMoreRecommendations';
 import RecommendationsError from '@/components/meal/RecommendationsError';
 import RecommendationsLoading from '@/components/meal/RecommendationsLoading';
 import { useRandomRecommendation } from '@/hooks/useRandomRecommendation';
-import { Box, Button } from '@mui/material';
+import { Box, Button, Stack } from '@mui/material';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import { useInspireRequired } from '../InspireContext';
+import { useHistoryContext } from '@/components/history/HistoryContext';
+import { useCallback } from 'react';
 
 export default function CookStep() {
   const { cuisine, ingredient } = useInspireRequired();
+  const { addEntry } = useHistoryContext();
 
   const {
-    reccomendedMealId,
+    reccomendedMeal,
     moveToNextRecommendation,
     isLoading,
     isError,
     hasReccomendationLeft,
   } = useRandomRecommendation(cuisine, ingredient);
+
+  const handleDislike = useCallback(() => {
+    addEntry(reccomendedMeal, 'dislike');
+    moveToNextRecommendation();
+  }, [addEntry, moveToNextRecommendation, reccomendedMeal]);
 
   if (isLoading) {
     return <RecommendationsLoading />;
@@ -33,9 +43,25 @@ export default function CookStep() {
 
   return (
     <Box>
-      <Meal idMeal={reccomendedMealId} />
-      <Button>I love it</Button>
-      <Button onClick={moveToNextRecommendation}>I Don&apos;t like it</Button>
+      <Meal idMeal={reccomendedMeal.idMeal} />
+      <Stack direction="row" spacing={2} sx={{ mt: 2 }} justifyContent="center">
+        <Button
+          variant="contained"
+          color="success"
+          startIcon={<ThumbUpIcon />}
+          onClick={() => addEntry(reccomendedMeal, 'like')}
+        >
+          I love it
+        </Button>
+        <Button
+          variant="outlined"
+          color="error"
+          startIcon={<ThumbDownIcon />}
+          onClick={handleDislike}
+        >
+          Show me another
+        </Button>
+      </Stack>
     </Box>
   );
 }

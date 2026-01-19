@@ -1,5 +1,5 @@
 import { Cousine, IngredientName, MealId } from '@/types/MealsApi';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import { useRecommendations } from './useRecommendations';
 
 export function useRandomRecommendation(
@@ -7,35 +7,43 @@ export function useRandomRecommendation(
   ingredientName: IngredientName
 ) {
   const {
-    data: recommendedMeals = new Set(),
+    data: recommendedMeals = [],
     isLoading,
     isError,
   } = useRecommendations(cousine, ingredientName);
-  const [discardedMeals, setDiscardedMeal] = useState<MealId[]>([]);
+
+  const [discardedMealIds, setDiscardedMealId] = useState<MealId[]>([]);
+  // eslint-disable-next-line react-hooks/purity -- Safe: useRef returns a stable object after the first render
+  const randomIndexRef = useRef(Math.random());
+
   const availableReccomandations = useMemo(
-    () => [...recommendedMeals.difference(new Set(discardedMeals))],
-    [discardedMeals, recommendedMeals]
+    () =>
+      recommendedMeals.filter(
+        ({ idMeal }) => !discardedMealIds.includes(idMeal)
+      ),
+    [discardedMealIds, recommendedMeals]
   );
-  const reccomendedMealId = useMemo(
+
+  const reccomendedMeal = useMemo(
     () =>
       availableReccomandations[
-        Math.floor(Math.random() * availableReccomandations.length)
+        Math.floor(randomIndexRef.current * availableReccomandations.length)
       ],
     [availableReccomandations]
   );
 
-  const moveToNextRecommendation = useCallback(
-    () =>
-      setDiscardedMeal((previouslyDiscardedMeals) => [
-        ...previouslyDiscardedMeals,
-        reccomendedMealId,
-      ]),
-    [reccomendedMealId]
-  );
+  const moveToNextRecommendation = useCallback(() => {
+    randomIndexRef.current = Math.random();
+    setDiscardedMealId((previouslyDiscardedMealIds) => [
+      ...previouslyDiscardedMealIds,
+      reccomendedMeal?.idMeal,
+    ]);
+  }, [reccomendedMeal]);
+
   return {
     isLoading,
     isError,
-    reccomendedMealId,
+    reccomendedMeal,
     moveToNextRecommendation,
     hasReccomendationLeft: !!availableReccomandations.length,
   };

@@ -12,12 +12,15 @@ import {
 } from '@mui/material';
 import { formatDistanceToNow, format } from 'date-fns';
 import { FC, useMemo } from 'react';
+import { useHistoryContext } from './HistoryContext';
 
 interface HistoryRowProps {
   entry: HistoryEntry;
 }
 
 const HistoryRow: FC<HistoryRowProps> = ({ entry }) => {
+  const { selectEntry, selectedEntry } = useHistoryContext();
+
   const { relativeTime, fullDate } = useMemo(() => {
     const date = new Date(entry.isoTimestamp);
     return {
@@ -31,8 +34,19 @@ const HistoryRow: FC<HistoryRowProps> = ({ entry }) => {
     [entry.vote]
   );
 
+  const isSelected = useMemo(
+    () =>
+      selectedEntry?.idMeal === entry.idMeal &&
+      selectedEntry?.isoTimestamp === entry.isoTimestamp,
+    [selectedEntry, entry.idMeal, entry.isoTimestamp]
+  );
+
   return (
-    <ListItemButton sx={{ py: 1.5, px: 2 }}>
+    <ListItemButton
+      sx={{ py: 1.5, px: 2 }}
+      selected={isSelected}
+      onClick={() => selectEntry(entry)}
+    >
       <ListItemAvatar>
         <Avatar variant="rounded" sx={{ width: 60, height: 60, mr: 2 }}>
           <ImageLoader

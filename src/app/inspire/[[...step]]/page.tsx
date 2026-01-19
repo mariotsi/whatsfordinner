@@ -142,6 +142,7 @@ export default function InspirePage() {
       <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
         <Button
           color="inherit"
+          variant="outlined"
           disabled={activeStep === 0}
           onClick={handleBack}
           sx={{ mr: 1 }}
@@ -151,7 +152,12 @@ export default function InspirePage() {
         <Box sx={{ flex: '1 1 auto' }} />
         {isLastStep ? (
           <>
-            <Button color="inherit" onClick={handleInspireAgain} sx={{ mr: 1 }}>
+            <Button
+              color="inherit"
+              variant="outlined"
+              onClick={handleInspireAgain}
+              sx={{ mr: 1 }}
+            >
               Inspire me again
             </Button>
             <Button variant="contained" onClick={handleGoHome}>
@@ -161,7 +167,11 @@ export default function InspirePage() {
         ) : (
           <Tooltip title={getNextDisabledReason} arrow>
             <span>
-              <Button onClick={handleNext} disabled={isNextDisabled}>
+              <Button
+                variant="outlined"
+                onClick={handleNext}
+                disabled={isNextDisabled}
+              >
                 Next
               </Button>
             </span>
