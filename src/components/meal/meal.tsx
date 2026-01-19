@@ -7,7 +7,6 @@ import {
   Card,
   CardContent,
   CardHeader,
-  CardMedia,
   Typography,
   Button,
   Link,
@@ -19,6 +18,8 @@ import LaunchIcon from '@mui/icons-material/Launch';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import { getYoutubeId } from '@/utils/common';
 import { useMemo } from 'react';
+import ImageLoader from '@/components/ImageLoader';
+import MealImageFallback from '@/components/MealImageFallback';
 
 export default function Meal({ idMeal }: { idMeal: MealId }) {
   const { data: meal, isLoading, isError, error } = useMeal(idMeal);
@@ -48,17 +49,22 @@ export default function Meal({ idMeal }: { idMeal: MealId }) {
         flexDirection: { xs: 'column', md: 'row' },
       }}
     >
-      <CardMedia
-        component="img"
+      <Box
         sx={{
+          position: 'relative',
           width: { xs: '100%', md: '50%' },
-          height: 'auto',
-          objectFit: 'cover',
           minHeight: 300,
+          flexShrink: 0,
         }}
-        image={meal.strMealThumb}
-        alt={meal.strMeal + ' dish'}
-      />
+      >
+        <ImageLoader
+          src={meal.strMealThumb}
+          alt={meal.strMeal + ' dish'}
+          fill
+          style={{ objectFit: 'cover' }}
+          fallback={<MealImageFallback />}
+        />
+      </Box>
 
       <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
         <CardHeader

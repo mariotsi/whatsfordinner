@@ -5,7 +5,7 @@ export type IngredientPair = {
   measure: string;
 };
 
-const MAX_INGREDIENTS = 100;
+const MAX_INGREDIENTS = 20;
 
 export function getIngredients(meal: DetailedMeal): IngredientPair[] {
   const results: IngredientPair[] = [];

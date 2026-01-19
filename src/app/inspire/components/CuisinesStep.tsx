@@ -2,8 +2,8 @@
 
 import { useCuisines } from '@/hooks/useCuisines';
 import { Autocomplete, Box, CircularProgress, TextField } from '@mui/material';
-import Image from 'next/image';
 import { getFlagUrl } from '@/utils/cuisineFlags';
+import ImageLoader from '@/components/ImageLoader';
 import { useInspire } from '../InspireContext';
 
 export default function CuisinesStep() {
@@ -29,12 +29,11 @@ export default function CuisinesStep() {
             sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
           >
             {flagUrl && (
-              <Image
+              <ImageLoader
                 src={flagUrl}
                 alt={`${option} flag`}
                 width={20}
                 height={15}
-                unoptimized
               />
             )}
             {option}

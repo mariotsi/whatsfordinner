@@ -10,12 +10,16 @@ import {
   ListItemAvatar,
   Avatar,
 } from '@mui/material';
-import Image from 'next/image';
 import { DetailedMeal } from '@/types/MealsApi';
 import { getIngredients } from '@/utils/meal';
-import { useMemo } from 'react';
+import { FC, memo, useMemo } from 'react';
+import ImageLoader from '@/components/ImageLoader';
 
-export default function IngredientsList({ meal }: { meal: DetailedMeal }) {
+type IngredientsListProps = {
+  meal: DetailedMeal;
+};
+
+const IngredientsList: FC<IngredientsListProps> = ({ meal }) => {
   const ingredients = useMemo(() => getIngredients(meal), [meal]);
   if (ingredients.length === 0) return null;
 
@@ -47,14 +51,13 @@ export default function IngredientsList({ meal }: { meal: DetailedMeal }) {
                     bgcolor: 'transparent',
                     width: 40,
                     height: 40,
-                    position: 'relative',
                   }}
                 >
-                  <Image
+                  <ImageLoader
                     src={`https://www.themealdb.com/images/ingredients/${encodeURIComponent(item.ingredient)}-Small.png`}
                     alt={item.ingredient}
-                    fill
-                    sizes="40px"
+                    width={40}
+                    height={40}
                     style={{ objectFit: 'contain' }}
                   />
                 </Avatar>
@@ -68,4 +71,6 @@ export default function IngredientsList({ meal }: { meal: DetailedMeal }) {
       </List>
     </Box>
   );
-}
+};
+
+export default memo(IngredientsList);

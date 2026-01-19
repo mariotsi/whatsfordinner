@@ -3,7 +3,7 @@
 import { useIngredients } from '@/hooks/useIngredients';
 import { Ingredient } from '@/types/MealsApi';
 import { Autocomplete, Box, CircularProgress, TextField } from '@mui/material';
-import Image from 'next/image';
+import ImageLoader from '@/components/ImageLoader';
 import { useMemo } from 'react';
 import { useInspire } from '../InspireContext';
 
@@ -35,12 +35,11 @@ export default function IngredientsStep() {
             sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
           >
             {option.strThumb && (
-              <Image
+              <ImageLoader
                 src={option.strThumb}
-                alt={`${option} thumbnail`}
+                alt={`${option.strIngredient} thumbnail`}
                 width={20}
                 height={15}
-                unoptimized
               />
             )}
             {option.strIngredient}
