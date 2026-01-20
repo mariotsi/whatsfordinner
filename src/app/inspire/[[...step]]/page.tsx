@@ -139,7 +139,14 @@ export default function InspirePage() {
 
       <Box sx={{ py: 4 }}>{isValidStep && <StepComponent />}</Box>
 
-      <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          pt: 2,
+          justifyContent: 'space-around',
+        }}
+      >
         <Button
           color="inherit"
           variant="outlined"
@@ -149,7 +156,6 @@ export default function InspirePage() {
         >
           Back
         </Button>
-        <Box sx={{ flex: '1 1 auto' }} />
         {isLastStep ? (
           <>
             <Button
