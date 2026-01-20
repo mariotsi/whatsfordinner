@@ -1,7 +1,7 @@
 'use client';
 
 import { HistoryEntry } from '@/types/History';
-import { Meal } from '@/types/MealsApi';
+import { Cousine, IngredientName, Meal } from '@/types/MealsApi';
 import {
   getHistory,
   saveHistory,
@@ -21,7 +21,12 @@ interface HistoryContextValue {
   isLoading: boolean;
   selectedEntry: HistoryEntry | null;
   selectEntry: (entry: HistoryEntry | null) => void;
-  addEntry: (meal: Meal, vote: 'like' | 'dislike') => void;
+  addEntry: (
+    meal: Meal,
+    vote: 'like' | 'dislike',
+    inputCuisine: Cousine,
+    inputIngredient: IngredientName
+  ) => void;
   clearHistory: () => void;
 }
 
@@ -36,19 +41,29 @@ export const HistoryProvider = ({ children }: { children: ReactNode }) => {
     setSelectedEntry(entry);
   }, []);
 
-  const addEntry = useCallback((meal: Meal, vote: HistoryEntry['vote']) => {
-    const entry: HistoryEntry = {
-      ...meal,
-      isoTimestamp: new Date().toISOString(),
-      vote,
-    };
+  const addEntry = useCallback(
+    (
+      meal: Meal,
+      vote: HistoryEntry['vote'],
+      inputCuisine: Cousine,
+      inputIngredient: IngredientName
+    ) => {
+      const entry: HistoryEntry = {
+        ...meal,
+        isoTimestamp: new Date().toISOString(),
+        vote,
+        inputCuisine,
+        inputIngredient,
+      };
 
-    setHistory((prev) => {
-      const updated = [entry, ...prev];
-      saveHistory(updated);
-      return updated;
-    });
-  }, []);
+      setHistory((prev) => {
+        const updated = [entry, ...prev];
+        saveHistory(updated);
+        return updated;
+      });
+    },
+    []
+  );
 
   const clearHistory = useCallback(() => {
     setHistory([]);

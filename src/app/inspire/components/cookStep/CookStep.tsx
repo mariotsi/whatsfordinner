@@ -22,12 +22,12 @@ export default function CookStep() {
   } = useRandomRecommendation(cuisine, ingredient);
 
   const handleLike = useCallback(() => {
-    addEntry(reccomendedMeal, 'like');
-  }, [addEntry, reccomendedMeal]);
+    addEntry(reccomendedMeal, 'like', cuisine, ingredient);
+  }, [addEntry, reccomendedMeal, cuisine, ingredient]);
 
   const handleDislike = useCallback(() => {
-    addEntry(reccomendedMeal, 'dislike');
-  }, [addEntry, reccomendedMeal]);
+    addEntry(reccomendedMeal, 'dislike', cuisine, ingredient);
+  }, [addEntry, reccomendedMeal, cuisine, ingredient]);
 
   if (isLoading) {
     return <RecommendationsLoading />;

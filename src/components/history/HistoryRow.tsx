@@ -73,9 +73,22 @@ const HistoryRow: FC<HistoryRowProps> = ({ entry }) => {
       <ListItemText
         primary={entry.strMeal}
         secondary={
-          <Tooltip title={fullDate} arrow>
-            <span>{relativeTime}</span>
-          </Tooltip>
+          <>
+            {entry.inputCuisine && entry.inputIngredient && (
+              <Box component="span" sx={{ display: 'block' }}>
+                <Box component="span" sx={{ fontWeight: 600 }}>
+                  {entry.inputCuisine}
+                </Box>
+                {' cuisine with '}
+                <Box component="span" sx={{ fontWeight: 600 }}>
+                  {entry.inputIngredient.toLowerCase()}
+                </Box>
+              </Box>
+            )}
+            <Tooltip title={fullDate} arrow>
+              <span>{relativeTime}</span>
+            </Tooltip>
+          </>
         }
         slotProps={{
           primary: {
