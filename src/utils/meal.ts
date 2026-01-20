@@ -1,7 +1,7 @@
-import { DetailedMeal } from '@/types/MealsApi';
+import { DetailedMeal, IngredientName } from '@/types/MealsApi';
 
 export type IngredientPair = {
-  ingredient: string;
+  ingredient: IngredientName;
   measure: string;
 };
 
@@ -21,7 +21,7 @@ export function getIngredients(meal: DetailedMeal): IngredientPair[] {
     const trimmedRawIngredient = rawIngredient?.trim();
     if (!!trimmedRawIngredient) {
       results.push({
-        ingredient: trimmedRawIngredient,
+        ingredient: trimmedRawIngredient as IngredientName,
         measure: rawMeasure ? rawMeasure.trim() : '',
       });
     }

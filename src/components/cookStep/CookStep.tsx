@@ -1,14 +1,14 @@
 'use client';
 
 import Meal from '@/components/meal/meal';
-import NoMoreRecommendations from '@/components/meal/NoMoreRecommendations';
-import RecommendationsError from '@/components/meal/RecommendationsError';
-import RecommendationsLoading from '@/components/meal/RecommendationsLoading';
+import NoMoreRecommendations from './NoMoreRecommendations';
+import RecommendationsError from './RecommendationsError';
+import RecommendationsLoading from './RecommendationsLoading';
 import { useRandomRecommendation } from '@/hooks/useRandomRecommendation';
 import { Box, Button, Stack } from '@mui/material';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
-import { useInspireRequired } from '../InspireContext';
+import { useInspireRequired } from '@/app/inspire/InspireContext';
 import { useHistoryContext } from '@/components/history/HistoryContext';
 import { useCallback } from 'react';
 
