@@ -9,10 +9,13 @@ import {
   Avatar,
   Box,
   Tooltip,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
 import { formatDistanceToNow, format } from 'date-fns';
-import { FC, useMemo } from 'react';
+import { FC, useCallback, useMemo } from 'react';
 import { useHistoryContext } from './HistoryContext';
+import { useRouter } from 'next/navigation';
 
 interface HistoryRowProps {
   entry: HistoryEntry;
@@ -20,6 +23,9 @@ interface HistoryRowProps {
 
 const HistoryRow: FC<HistoryRowProps> = ({ entry }) => {
   const { selectEntry, selectedEntry } = useHistoryContext();
+  const router = useRouter();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const { relativeTime, fullDate } = useMemo(() => {
     const date = new Date(entry.isoTimestamp);
@@ -41,11 +47,18 @@ const HistoryRow: FC<HistoryRowProps> = ({ entry }) => {
     [selectedEntry, entry.idMeal, entry.isoTimestamp]
   );
 
+  const handleClick = useCallback(() => {
+    selectEntry(entry);
+    if (isMobile) {
+      router.push(`/meal/${entry.idMeal}`);
+    }
+  }, [entry, isMobile, router, selectEntry]);
+
   return (
     <ListItemButton
       sx={{ py: 1.5, px: 2 }}
       selected={isSelected}
-      onClick={() => selectEntry(entry)}
+      onClick={handleClick}
     >
       <ListItemAvatar>
         <Avatar variant="rounded" sx={{ width: 60, height: 60, mr: 2 }}>

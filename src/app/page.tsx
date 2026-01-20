@@ -4,11 +4,14 @@ import EmptyHistoryState from '@/components/EmptyHistoryState';
 import History from '@/components/history/History';
 import { useHistoryContext } from '@/components/history/HistoryContext';
 import Meal from '@/components/meal/meal';
-import { Box, Stack, Typography } from '@mui/material';
+import { Box, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { FC } from 'react';
 import styles from './page.module.css';
 
-export default function Home() {
+const Home: FC = () => {
   const { history, selectedEntry, isLoading } = useHistoryContext();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const hasHistory = history.length > 0;
 
@@ -28,14 +31,16 @@ export default function Home() {
         </Typography>
         {hasHistory ? (
           <Stack
-            direction={{ sm: 'column', md: 'row' }}
+            direction={{ xs: 'column', md: 'row' }}
             spacing={{ xs: 1, sm: 2, md: 4 }}
             sx={{ width: '100%', flex: 1 }}
           >
             <History entries={history} />
-            <Box sx={{ flex: 1, minWidth: 0, display: 'flex' }}>
-              {selectedEntry && <Meal idMeal={selectedEntry.idMeal} />}
-            </Box>
+            {!isMobile && (
+              <Box sx={{ flex: 1, minWidth: 0, display: 'flex' }}>
+                {selectedEntry && <Meal idMeal={selectedEntry.idMeal} />}
+              </Box>
+            )}
           </Stack>
         ) : (
           <EmptyHistoryState />
@@ -43,4 +48,6 @@ export default function Home() {
       </main>
     </div>
   );
-}
+};
+
+export default Home;

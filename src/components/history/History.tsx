@@ -27,7 +27,13 @@ const History: FC<{
           Get inspired, again!
         </Button>
       </Stack>
-      <List sx={{ width: '100%', minWidth: 500, bgcolor: 'background.paper' }}>
+      <List
+        sx={{
+          width: '100%',
+          minWidth: { xs: 'auto', md: 500 },
+          bgcolor: 'background.paper',
+        }}
+      >
         {entries.map((historyEntry, index) => (
           <Box key={historyEntry.idMeal + '@@' + historyEntry.isoTimestamp}>
             <HistoryRow entry={historyEntry} />
