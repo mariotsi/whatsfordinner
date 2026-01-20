@@ -19,12 +19,21 @@ import MealNotFound from './MealNotFound';
 import MealLoading from './MealLoading';
 import LaunchIcon from '@mui/icons-material/Launch';
 import YouTubeIcon from '@mui/icons-material/YouTube';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import { getYoutubeId } from '@/utils/common';
 import { FC, memo, useMemo } from 'react';
 import ImageLoader from '@/components/ImageLoader';
 import MealImageFallback from '@/components/MealImageFallback';
 
-const Meal: FC<{ idMeal: MealId }> = ({ idMeal }) => {
+type MealProps = {
+  idMeal: MealId;
+  enableFeedback?: boolean;
+  onLike?: () => void;
+  onDislike?: () => void;
+};
+
+const Meal: FC<MealProps> = ({ idMeal, enableFeedback, onLike, onDislike }) => {
   const { data: meal, isLoading, isError, error } = useMeal(idMeal);
   const youtubeId = useMemo(
     () => getYoutubeId(meal?.strYoutube),
@@ -153,6 +162,31 @@ const Meal: FC<{ idMeal: MealId }> = ({ idMeal }) => {
                   >
                     View original source
                   </Button>
+                )}
+                {enableFeedback && (
+                  <Stack
+                    direction="row"
+                    spacing={2}
+                    justifyContent="center"
+                    sx={{ mt: 2 }}
+                  >
+                    <Button
+                      variant="contained"
+                      color="success"
+                      startIcon={<ThumbUpIcon />}
+                      onClick={onLike}
+                    >
+                      I love it
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      color="error"
+                      startIcon={<ThumbDownIcon />}
+                      onClick={onDislike}
+                    >
+                      Show me another
+                    </Button>
+                  </Stack>
                 )}
               </Stack>
             </CardContent>
