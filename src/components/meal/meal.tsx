@@ -14,6 +14,9 @@ import {
   Divider,
 } from '@mui/material';
 import IngredientsList from './ingredientsList';
+import MealError from './MealError';
+import MealNotFound from './MealNotFound';
+import MealLoading from './MealLoading';
 import LaunchIcon from '@mui/icons-material/Launch';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import { getYoutubeId } from '@/utils/common';
@@ -28,16 +31,16 @@ const Meal: FC<{ idMeal: MealId }> = ({ idMeal }) => {
     [meal?.strYoutube]
   );
 
+  if (isLoading) {
+    return <MealLoading />;
+  }
+
   if (isError) {
-    return <>{error.message}</>;
+    return <MealError message={error.message} />;
   }
 
   if (!meal) {
-    return <>ops</>;
-  }
-
-  if (isLoading) {
-    return <>Loading the perfect meal </>;
+    return <MealNotFound />;
   }
 
   return (
