@@ -8,7 +8,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useCallback, useMemo, useEffect, ComponentType } from 'react';
 import CuisinesStep from '../components/CuisinesStep';
 import IngredientsStep from '../components/IngredientsStep';
-import CookStep from '@/components/cookStep/CookStep';
+import CookStep from '../components/cookStep/CookStep';
 import { useInspire } from '../InspireContext';
 
 type StepConfig = {

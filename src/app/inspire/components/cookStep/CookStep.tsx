@@ -27,8 +27,7 @@ export default function CookStep() {
 
   const handleDislike = useCallback(() => {
     addEntry(reccomendedMeal, 'dislike');
-    moveToNextRecommendation();
-  }, [addEntry, moveToNextRecommendation, reccomendedMeal]);
+  }, [addEntry, reccomendedMeal]);
 
   if (isLoading) {
     return <RecommendationsLoading />;
@@ -48,6 +47,7 @@ export default function CookStep() {
       enableFeedback
       onLike={handleLike}
       onDislike={handleDislike}
+      onNewIdea={moveToNextRecommendation}
     />
   );
 }
