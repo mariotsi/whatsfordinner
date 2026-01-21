@@ -35,7 +35,9 @@ const Home: FC = () => {
             spacing={{ xs: 1, sm: 2, md: 4 }}
             sx={{ width: '100%', flex: 1 }}
           >
-            <History entries={history} />
+            <Box sx={{ flex: 1, minWidth: 0 }}>
+              <History entries={history} />
+            </Box>
             {!isMobile && (
               <Box sx={{ flex: 1, minWidth: 0, display: 'flex' }}>
                 {selectedEntry && <Meal idMeal={selectedEntry.idMeal} />}

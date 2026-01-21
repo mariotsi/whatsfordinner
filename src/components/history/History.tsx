@@ -8,7 +8,7 @@ const History: FC<{
   entries: HistoryEntry[];
 }> = ({ entries }) => {
   return (
-    <Box sx={{ flexShrink: 0 }}>
+    <Box sx={{ width: '100%' }}>
       <Stack
         direction="row"
         alignItems="center"
@@ -31,7 +31,6 @@ const History: FC<{
         aria-label="Recently viewed meals"
         sx={{
           width: '100%',
-          minWidth: { xs: 'auto', md: 500 },
           bgcolor: 'background.paper',
         }}
       >
