@@ -4,10 +4,10 @@ import { useIngredients } from '@/hooks/useIngredients';
 import { Ingredient } from '@/types/MealsApi';
 import { Autocomplete, Box, CircularProgress, TextField } from '@mui/material';
 import ImageLoader from '@/components/ImageLoader';
-import { useMemo } from 'react';
+import { useMemo, FC } from 'react';
 import { useInspire } from '../InspireContext';
 
-export default function IngredientsStep() {
+const IngredientsStep: FC = () => {
   const { data: ingredients = [], isLoading, isError } = useIngredients();
   const { ingredient, setIngredient } = useInspire();
 
@@ -67,4 +67,6 @@ export default function IngredientsStep() {
       )}
     />
   );
-}
+};
+
+export default IngredientsStep;

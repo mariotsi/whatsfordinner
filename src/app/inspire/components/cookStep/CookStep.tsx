@@ -7,9 +7,9 @@ import RecommendationsLoading from './RecommendationsLoading';
 import { useRandomRecommendation } from '@/hooks/useRandomRecommendation';
 import { useInspireRequired } from '@/app/inspire/InspireContext';
 import { useHistoryContext } from '@/components/history/HistoryContext';
-import { useCallback } from 'react';
+import { useCallback, FC } from 'react';
 
-export default function CookStep() {
+const CookStep: FC = () => {
   const { cuisine, ingredient } = useInspireRequired();
   const { addEntry } = useHistoryContext();
 
@@ -50,4 +50,6 @@ export default function CookStep() {
       onNewIdea={moveToNextRecommendation}
     />
   );
-}
+};
+
+export default CookStep;

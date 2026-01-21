@@ -2,6 +2,7 @@
 
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import { FC, PropsWithChildren, memo } from 'react';
 
 const theme = createTheme({
   colorSchemes: {
@@ -9,15 +10,13 @@ const theme = createTheme({
   },
 });
 
-export default function ThemeRegistry({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+const ThemeRegistry: FC<PropsWithChildren> = ({ children }) => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       {children}
     </ThemeProvider>
   );
-}
+};
+
+export default memo(ThemeRegistry);

@@ -6,6 +6,7 @@ import ThemeRegistry from './ThemeRegistry';
 import QueryProvider from './QueryProvider';
 import { HistoryProvider } from '@/components/history/HistoryContext';
 import styles from '@/app/page.module.css';
+import { FC, PropsWithChildren } from 'react';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -22,11 +23,7 @@ export const metadata: Metadata = {
   description: 'Discover your next delicious meal',
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+const RootLayout: FC<PropsWithChildren> = ({ children }) => {
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
@@ -44,4 +41,6 @@ export default function RootLayout({
       </body>
     </html>
   );
-}
+};
+
+export default RootLayout;

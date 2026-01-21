@@ -5,8 +5,9 @@ import { Autocomplete, Box, CircularProgress, TextField } from '@mui/material';
 import { getFlagUrl } from '@/utils/cuisineFlags';
 import ImageLoader from '@/components/ImageLoader';
 import { useInspire } from '../InspireContext';
+import { FC } from 'react';
 
-export default function CuisinesStep() {
+const CuisinesStep: FC = () => {
   const { data: cuisines = [], isLoading, isError } = useCuisines();
   const { cuisine, setCuisine } = useInspire();
 
@@ -61,4 +62,6 @@ export default function CuisinesStep() {
       )}
     />
   );
-}
+};
+
+export default CuisinesStep;

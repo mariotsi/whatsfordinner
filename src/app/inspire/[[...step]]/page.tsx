@@ -5,7 +5,7 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import { Button, Tooltip, Typography } from '@mui/material';
 import { usePathname, useRouter } from 'next/navigation';
-import { useCallback, useMemo, useEffect, ComponentType } from 'react';
+import { useCallback, useMemo, useEffect, ComponentType, FC } from 'react';
 import CuisinesStep from '../components/CuisinesStep';
 import IngredientsStep from '../components/IngredientsStep';
 import CookStep from '../components/cookStep/CookStep';
@@ -23,7 +23,7 @@ const steps: StepConfig[] = [
   { label: "Let's cook!", key: 'cook', component: CookStep },
 ];
 
-export default function InspirePage() {
+const InspirePage: FC = () => {
   const router = useRouter();
   const pathname = usePathname();
   const { cuisine, ingredient, reset } = useInspire();
@@ -186,4 +186,6 @@ export default function InspirePage() {
       </Box>
     </Box>
   );
-}
+};
+
+export default InspirePage;

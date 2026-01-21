@@ -1,14 +1,13 @@
 import { Metadata } from 'next';
 import { InspireProvider } from './InspireContext';
+import { FC, PropsWithChildren } from 'react';
 
 export const metadata: Metadata = {
   title: "Get inspired | What's for dinner",
 };
 
-export default function InspireLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return <InspireProvider>{children}</InspireProvider>;
-}
+const InspireLayout: FC<PropsWithChildren> = ({ children }) => (
+  <InspireProvider>{children}</InspireProvider>
+);
+
+export default InspireLayout;
