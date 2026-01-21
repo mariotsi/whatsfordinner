@@ -28,6 +28,7 @@ const History: FC<{
         </Button>
       </Stack>
       <List
+        aria-label="Recently viewed meals"
         sx={{
           width: '100%',
           minWidth: { xs: 'auto', md: 500 },

@@ -21,6 +21,8 @@ const NoMoreRecommendations: FC = () => (
       viewBox="0 0 120 120"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="Sad face indicating no more recommendations"
     >
       <circle cx="60" cy="60" r="50" fill="#FFF3E0" />
       <circle cx="40" cy="50" r="8" fill="#5D4037" />

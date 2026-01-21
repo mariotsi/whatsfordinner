@@ -2,7 +2,7 @@
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
+import StepButton from '@mui/material/StepButton';
 import { Button, Tooltip, Typography } from '@mui/material';
 import { usePathname, useRouter } from 'next/navigation';
 import { useCallback, useMemo, useEffect, ComponentType, FC } from 'react';
@@ -131,8 +131,8 @@ const InspirePage: FC = () => {
 
       <Stepper activeStep={activeStep} alternativeLabel>
         {steps.map((step, index) => (
-          <Step key={step.key} onClick={handleStep(index)}>
-            <StepLabel sx={{ cursor: 'pointer' }}>{step.label}</StepLabel>
+          <Step key={step.key}>
+            <StepButton onClick={handleStep(index)}>{step.label}</StepButton>
           </Step>
         ))}
       </Stepper>

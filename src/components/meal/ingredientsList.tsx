@@ -24,15 +24,20 @@ const IngredientsList: FC<IngredientsListProps> = ({ meal }) => {
   if (ingredients.length === 0) return null;
 
   return (
-    <Box component="section">
+    <Box component="section" aria-labelledby="ingredients-heading">
       <Typography
+        id="ingredients-heading"
         sx={{ marginBottom: 1, marginTop: 4, fontWeight: 'bold' }}
         variant="body1"
       >
         Ingredients
       </Typography>
 
-      <List dense sx={{ width: '100%', bgcolor: 'background.paper' }}>
+      <List
+        dense
+        aria-labelledby="ingredients-heading"
+        sx={{ width: '100%', bgcolor: 'background.paper' }}
+      >
         {ingredients.map((item, index) => (
           <Box key={item.ingredient}>
             <ListItem

@@ -21,6 +21,8 @@ const MealError: FC<{ message?: string }> = ({ message }) => (
       viewBox="0 0 120 120"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="Error loading meal"
     >
       {/* Broken plate */}
       <ellipse cx="60" cy="75" rx="40" ry="10" fill="#E0E0E0" />

@@ -21,6 +21,8 @@ const MealNotFound: FC = () => (
       viewBox="0 0 120 120"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="Empty plate with question mark"
     >
       {/* Empty plate */}
       <ellipse cx="60" cy="70" rx="45" ry="15" fill="#E0E0E0" />

@@ -16,7 +16,10 @@ const MealImageFallback: FC = () => (
       textAlign: 'center',
     }}
   >
-    <RestaurantIcon sx={{ fontSize: 64, color: 'text.disabled' }} />
+    <RestaurantIcon
+      sx={{ fontSize: 64, color: 'text.disabled' }}
+      aria-hidden="true"
+    />
     <Typography variant="body2" color="text.secondary" sx={{ maxWidth: 200 }}>
       Someone must have eaten this image because we can&apos;t find it anymore
     </Typography>

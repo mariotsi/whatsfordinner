@@ -126,8 +126,12 @@ const Meal: FC<MealProps> = ({
                         gap: 1,
                       }}
                     >
-                      <YouTubeIcon color="error" fontSize="small" /> Video
-                      Tutorial
+                      <YouTubeIcon
+                        color="error"
+                        fontSize="small"
+                        aria-hidden="true"
+                      />{' '}
+                      Video Tutorial
                     </Typography>
                     <Box
                       sx={{
@@ -149,7 +153,7 @@ const Meal: FC<MealProps> = ({
                           border: 0,
                         }}
                         src={`https://www.youtube.com/embed/${youtubeId}`}
-                        title="YouTube video player"
+                        title={`Video tutorial for ${meal.strMeal}`}
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowFullScreen
                       />
@@ -164,7 +168,7 @@ const Meal: FC<MealProps> = ({
                     rel="noopener noreferrer"
                     variant="outlined"
                     size="small"
-                    startIcon={<LaunchIcon />}
+                    startIcon={<LaunchIcon aria-hidden="true" />}
                     sx={{ alignSelf: 'flex-start', textTransform: 'none' }}
                   >
                     View original source
@@ -209,7 +213,7 @@ const Meal: FC<MealProps> = ({
                       <Button
                         variant="contained"
                         color="primary"
-                        startIcon={<AutorenewIcon />}
+                        startIcon={<AutorenewIcon aria-hidden="true" />}
                         onClick={() => {
                           setHasVoted(false);
                           onNewIdea?.();
