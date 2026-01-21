@@ -36,7 +36,10 @@ const History: FC<{
         }}
       >
         {entries.map((historyEntry, index) => (
-          <Box key={historyEntry.idMeal + '@@' + historyEntry.isoTimestamp}>
+          <Box
+            key={historyEntry.idMeal + '@@' + historyEntry.isoTimestamp}
+            data-testid={`history-row-${historyEntry.idMeal}-${historyEntry.isoTimestamp}`}
+          >
             <HistoryRow entry={historyEntry} />
             {index < entries.length - 1 && <Divider component="li" />}
           </Box>

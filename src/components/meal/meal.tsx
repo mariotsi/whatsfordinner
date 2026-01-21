@@ -60,7 +60,10 @@ const Meal: FC<MealProps> = ({
   }
 
   return (
-    <Box sx={{ containerType: 'inline-size', width: '100%' }}>
+    <Box
+      data-testid="meal-detail"
+      sx={{ containerType: 'inline-size', width: '100%' }}
+    >
       <Card
         sx={{
           display: 'flex',
@@ -94,6 +97,7 @@ const Meal: FC<MealProps> = ({
 
         <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
           <CardHeader
+            data-testid="meal-detail-header"
             title={meal.strMeal}
             subheader={meal.strCategory + ' • ' + meal.strArea}
           />

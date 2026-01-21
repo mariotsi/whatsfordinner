@@ -13,7 +13,9 @@
     "prepare": "husky",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
@@ -42,6 +44,7 @@
     "react-dom": "19.2.3"
   },
   "devDependencies": {
+    "cypress": "^15.9.0",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
