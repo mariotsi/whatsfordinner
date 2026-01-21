@@ -49,23 +49,31 @@ describe('Inspire Flow', () => {
   });
 
   it('shows "we are out of ideas" state when all recommendations are viewed', () => {
+    cy.intercept('https://www.themealdb.com/api/json/v1/1/list.php?a=list').as(
+      'cuisines'
+    );
     cy.visit('/inspire/cuisines');
-
+    cy.wait('@cuisines', { timeout: 30_000 });
     cy.get('input[role="combobox"]').type('Italian');
     cy.contains('[role="option"]', 'Italian').click();
+    cy.intercept('https://www.themealdb.com/api/json/v1/1/list.php?i=list').as(
+      'ingredients'
+    );
     cy.contains('button', 'Next').should('not.be.disabled').click();
 
-    cy.get('input[role="combobox"]').type('Garlic');
+    cy.wait('@ingredients', { timeout: 30_000 });
+    cy.get('input[role="combobox"]', { timeout: 10_000 }).type('Garlic');
     cy.contains('[role="option"]', 'Garlic').click();
     cy.contains('button', 'Next').should('not.be.disabled').click();
 
     cy.url().should('include', '/inspire/cook');
 
     const clickUntilExhausted = () => {
+      cy.contains('Finding the perfect recipe').should('not.exist');
+      cy.contains('Loading the perfect meal').should('not.exist');
       cy.get('body').then(($body) => {
         if ($body.find('button:contains("New idea")').length > 0) {
           cy.contains('button', 'New idea').click();
-          cy.wait(500);
           clickUntilExhausted();
         }
       });

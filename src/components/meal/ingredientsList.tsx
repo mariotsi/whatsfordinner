@@ -39,7 +39,7 @@ const IngredientsList: FC<IngredientsListProps> = ({ meal }) => {
         sx={{ width: '100%', bgcolor: 'background.paper' }}
       >
         {ingredients.map((item, index) => (
-          <Box key={item.ingredient}>
+          <Box key={`${item.ingredient}-${item.measure}`}>
             <ListItem
               secondaryAction={
                 <Typography variant="body2" color="text.secondary" noWrap>
