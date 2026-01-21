@@ -1,0 +1,71 @@
+import {
+  DetailedMeal,
+  Cousine,
+  IngredientName,
+  MealId,
+} from '@/types/MealsApi';
+
+/**
+ * Creates a base DetailedMeal object with default empty values.
+ * Use this as a starting point and override specific fields as needed.
+ */
+export function createMockMeal(
+  overrides?: Partial<DetailedMeal>
+): DetailedMeal {
+  return {
+    idMeal: '12345' as MealId,
+    strMeal: 'Test Meal',
+    strMealAlternate: null,
+    strCategory: 'Main',
+    strArea: 'Italian' as Cousine,
+    strInstructions: 'Cook it',
+    strMealThumb: 'https://example.com/meal.jpg',
+    strTags: null,
+    strYoutube: null,
+    strIngredient1: '' as IngredientName,
+    strIngredient2: '' as IngredientName,
+    strIngredient3: '' as IngredientName,
+    strIngredient4: '' as IngredientName,
+    strIngredient5: '' as IngredientName,
+    strIngredient6: '' as IngredientName,
+    strIngredient7: '' as IngredientName,
+    strIngredient8: '' as IngredientName,
+    strIngredient9: '' as IngredientName,
+    strIngredient10: '' as IngredientName,
+    strIngredient11: '' as IngredientName,
+    strIngredient12: '' as IngredientName,
+    strIngredient13: '' as IngredientName,
+    strIngredient14: '' as IngredientName,
+    strIngredient15: '' as IngredientName,
+    strIngredient16: '' as IngredientName,
+    strIngredient17: '' as IngredientName,
+    strIngredient18: '' as IngredientName,
+    strIngredient19: '' as IngredientName,
+    strIngredient20: '' as IngredientName,
+    strMeasure1: '',
+    strMeasure2: '',
+    strMeasure3: '',
+    strMeasure4: '',
+    strMeasure5: '',
+    strMeasure6: '',
+    strMeasure7: '',
+    strMeasure8: '',
+    strMeasure9: '',
+    strMeasure10: '',
+    strMeasure11: '',
+    strMeasure12: '',
+    strMeasure13: '',
+    strMeasure14: '',
+    strMeasure15: '',
+    strMeasure16: '',
+    strMeasure17: '',
+    strMeasure18: '',
+    strMeasure19: '',
+    strMeasure20: '',
+    strSource: null,
+    strImageSource: null,
+    strCreativeCommonsConfirmed: null,
+    dateModified: null,
+    ...overrides,
+  };
+}

@@ -42,6 +42,8 @@ const ImageLoader: FC<ImageLoaderProps> = ({
     >
       {status === 'loading' && (
         <Skeleton
+          role="progressbar"
+          aria-label="Loading image"
           variant={skeletonVariant}
           sx={{
             position: 'absolute',
