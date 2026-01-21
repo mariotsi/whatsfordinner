@@ -19,8 +19,6 @@ import MealNotFound from './MealNotFound';
 import MealLoading from './MealLoading';
 import LaunchIcon from '@mui/icons-material/Launch';
 import YouTubeIcon from '@mui/icons-material/YouTube';
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import { getYoutubeId } from '@/utils/common';
 import { FC, memo, useMemo, useState } from 'react';
@@ -173,48 +171,55 @@ const Meal: FC<MealProps> = ({
                   </Button>
                 )}
                 {enableFeedback && (
-                  <Stack spacing={2} sx={{ mt: 2 }}>
-                    <Stack direction="row" spacing={2}>
-                      <Button
-                        variant={hasVoted ? 'outlined' : 'contained'}
-                        color="success"
-                        startIcon={<ThumbUpIcon />}
-                        onClick={() => {
-                          setHasVoted(true);
-                          onLike?.();
-                        }}
-                        disabled={hasVoted}
-                        sx={{ flex: 1 }}
+                  <>
+                    <Divider sx={{ my: 3 }} />
+                    <Stack spacing={2}>
+                      <Typography
+                        variant="body1"
+                        sx={{ fontWeight: 'bold', textAlign: 'center' }}
                       >
-                        I like it
-                      </Button>
+                        Did it match your preference?
+                      </Typography>
+                      <Stack direction="row" spacing={2}>
+                        <Button
+                          variant={hasVoted ? 'outlined' : 'contained'}
+                          color="success"
+                          onClick={() => {
+                            setHasVoted(true);
+                            onLike?.();
+                          }}
+                          disabled={hasVoted}
+                          sx={{ flex: 1 }}
+                        >
+                          Yes
+                        </Button>
+                        <Button
+                          variant="outlined"
+                          color="error"
+                          onClick={() => {
+                            setHasVoted(true);
+                            onDislike?.();
+                          }}
+                          disabled={hasVoted}
+                          sx={{ flex: 1 }}
+                        >
+                          No
+                        </Button>
+                      </Stack>
                       <Button
-                        variant="outlined"
-                        color="error"
-                        startIcon={<ThumbDownIcon />}
+                        variant="contained"
+                        color="primary"
+                        startIcon={<AutorenewIcon />}
                         onClick={() => {
-                          setHasVoted(true);
-                          onDislike?.();
+                          setHasVoted(false);
+                          onNewIdea?.();
                         }}
-                        disabled={hasVoted}
-                        sx={{ flex: 1 }}
+                        fullWidth
                       >
-                        I don&apos;t like it
+                        New idea
                       </Button>
                     </Stack>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      startIcon={<AutorenewIcon />}
-                      onClick={() => {
-                        setHasVoted(false);
-                        onNewIdea?.();
-                      }}
-                      fullWidth
-                    >
-                      New idea
-                    </Button>
-                  </Stack>
+                  </>
                 )}
               </Stack>
             </CardContent>
